@@ -53,7 +53,6 @@ export default function SpaceshipSimulation() {
         color="white"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter.json"
       >
         Relativistic Spaceship Paradox
       </Text>
