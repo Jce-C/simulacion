@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useEffect } from "react";
-import { KeyboardControls } from "@react-three/drei";
+import { KeyboardControls, Html } from "@react-three/drei"; // <-- 1. IMPORTA Html
 import "@fontsource/inter";
 import SpaceshipSimulation from "./components/SpaceshipSimulation";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -85,7 +85,8 @@ function App() {
             />
             <pointLight position={[0, 10, 0]} intensity={0.5} />
 
-            <Suspense fallback={null}>
+            {/* --- 2. MODIFICA ESTA LÍNEA --- */}
+            <Suspense fallback={<Html center>Cargando simulación...</Html>}>
               <SpaceshipSimulation />
             </Suspense>
           </Canvas>
