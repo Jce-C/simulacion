@@ -1,50 +1,29 @@
-import { useRef, useEffect } from "react";
-import { useFrame } from "@react-three/fiber";
-import { OrbitControls, Text } from "@react-three/drei";
-import * as THREE from "three";
+import { Text } from "@react-three/drei";
 import Spaceship from "./Spaceship";
 import SpacetimeGrid from "./SpacetimeGrid";
 import Starfield from "./Starfield";
-import ControlPanel from "./ControlPanel";
 import TrajectoryTrail from "./TrajectoryTrail";
-import { useSimulation } from "../hooks/useSimulation";
 
-export default function SpaceshipSimulation() {
-  console.log('SpaceshipSimulation component loaded');
-  const {
-    isRunning,
-    simulationTime,
-    shipATime,
-    shipBTime,
-    velocityA,
-    velocityB,
-    shipAPosition,
-    shipBPosition,
-    trajectoryA,
-    trajectoryB,
-    toggleSimulation,
-    resetSimulation,
-    setVelocityA,
-    setVelocityB
-  } = useSimulation();
-
+// El componente ahora recibe todas las propiedades de la simulación
+export default function SpaceshipSimulation({
+  shipATime,
+  shipBTime,
+  velocityA,
+  velocityB,
+  shipAPosition,
+  shipBPosition,
+  trajectoryA,
+  trajectoryB,
+}: any) {
+  
   return (
     <>
-      {/* Orbital controls for camera movement */}
-      <OrbitControls
-        enablePan={true}
-        enableZoom={true}
-        enableRotate={true}
-        minDistance={10}
-        maxDistance={100}
-      />
+      {/* SE HAN ELIMINADO LOS OrbitControls */}
 
       {/* Background elements */}
       <Starfield />
-      <SpacetimeGrid 
-        shipBPosition={shipBPosition}
-        gravitationalMass={15}
-      />
+      {/* La malla ahora es estática y no depende de la posición de la nave */}
+      <SpacetimeGrid />
 
       {/* Title */}
       <Text
@@ -60,16 +39,16 @@ export default function SpaceshipSimulation() {
       {/* Spaceships */}
       <Spaceship
         position={shipAPosition}
-        color="#00ff00"
-        label="Ship A"
+        color="#ff0000" // El color rojo ahora es para la Nave A (curva)
+        label="A"
         properTime={shipATime}
         velocity={velocityA}
       />
       
       <Spaceship
         position={shipBPosition}
-        color="#ff0000"
-        label="Ship B"
+        color="#0077ff" // El color azul ahora es para la Nave B (recta)
+        label="B"
         properTime={shipBTime}
         velocity={velocityB}
       />
@@ -77,27 +56,17 @@ export default function SpaceshipSimulation() {
       {/* Trajectory trails */}
       <TrajectoryTrail
         points={trajectoryA}
-        color="#00ff00"
+        color="#ff0000"
         opacity={0.6}
       />
       
       <TrajectoryTrail
         points={trajectoryB}
-        color="#ff0000"
+        color="#0077ff"
         opacity={0.6}
       />
-
-      {/* Control panel */}
-      <ControlPanel
-        isRunning={isRunning}
-        simulationTime={simulationTime}
-        velocityA={velocityA}
-        velocityB={velocityB}
-        onToggleSimulation={toggleSimulation}
-        onReset={resetSimulation}
-        onVelocityAChange={setVelocityA}
-        onVelocityBChange={setVelocityB}
-      />
+      
+      {/* SE HA MOVIDO el ControlPanel a App.tsx */}
 
       {/* Coordinate axes */}
       <axesHelper args={[10]} />
