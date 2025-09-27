@@ -3,13 +3,12 @@ import { Suspense, useState, useEffect } from "react";
 import { KeyboardControls, Html } from "@react-three/drei";
 import "@fontsource/inter";
 import SpaceshipSimulation from "./components/SpaceshipSimulation";
-import ControlPanel from "./components/ControlPanel"; // <-- 1. IMPORTA el panel aquí
+import ControlPanel from "./components/ControlPanel";
 import ErrorBoundary from "./components/ErrorBoundary";
 import FallbackSimulation from "./components/FallbackSimulation";
 import { isWebGLSupported } from "./utils/webglDetection";
-import { useSimulation } from "./hooks/useSimulation"; // <-- 2. IMPORTA el hook de simulación
+import { useSimulation } from "./hooks/useSimulation";
 
-// Define control keys for the simulation
 const controls = [
   { name: "pause", keys: ["Space"] },
   { name: "reset", keys: ["KeyR"] },
@@ -17,8 +16,6 @@ const controls = [
 
 function App() {
   const [webGLSupported, setWebGLSupported] = useState<boolean | null>(null);
-  
-  // <-- 3. MUEVE la lógica de la simulación aquí para pasarla a los componentes
   const simulation = useSimulation();
 
   useEffect(() => {
@@ -36,16 +33,15 @@ function App() {
   }
 
   return (
-    // <-- 4. MODIFICA la estructura para tener el panel y el canvas por separado
     <div style={{ width: '100vw', height: '100vh', display: 'flex', backgroundColor: '#000' }}>
       <div style={{ flex: 1, position: 'relative' }}>
         <ErrorBoundary>
           <KeyboardControls map={controls}>
             <Canvas
-              orthographic // <-- 5. AÑADE para cámara isométrica
+              orthographic
               camera={{
-                position: [40, 40, 40], // Posición fija para la vista
-                zoom: 15, // Ajusta el acercamiento
+                position: [40, 40, 40],
+                zoom: 80, // <-- 1. HEMOS AUMENTADO EL ZOOM PARA ALEJAR LA VISTA
                 near: 0.1,
                 far: 1000,
               }}
@@ -58,6 +54,12 @@ function App() {
               <ambientLight intensity={0.5} />
               <directionalLight position={[10, 10, 5]} intensity={1.5} />
               
+              {/* --- 2. AÑADIMOS UN CUBO ROJO DE PRUEBA --- */}
+              <mesh position={[0, 0, 0]}>
+                <boxGeometry args={[2, 2, 2]} />
+                <meshStandardMaterial color="red" />
+              </mesh>
+              
               <Suspense fallback={<Html center>Cargando...</Html>}>
                 <SpaceshipSimulation {...simulation} />
               </Suspense>
@@ -66,7 +68,6 @@ function App() {
         </ErrorBoundary>
       </div>
       
-      {/* 6. RENDERIZA el panel de control fuera del canvas */}
       <div style={{ width: '320px', padding: '1rem', background: '#111827', color: 'white', overflowY: 'auto' }}>
         <ControlPanel {...simulation} />
       </div>
