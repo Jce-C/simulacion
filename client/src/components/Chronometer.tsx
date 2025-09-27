@@ -40,7 +40,6 @@ export default function Chronometer({ position, time, velocity, color }: Chronom
         color={color}
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter.json"
         fontWeight="bold"
       >
         {formatTime(time)}
@@ -53,7 +52,6 @@ export default function Chronometer({ position, time, velocity, color }: Chronom
         color="#cccccc"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter.json"
       >
         Proper Time
       </Text>
