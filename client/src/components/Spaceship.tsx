@@ -50,7 +50,6 @@ export default function Spaceship({ position, color, label, properTime, velocity
         color="white"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter.json"
       >
         {label}
       </Text>
@@ -70,7 +69,6 @@ export default function Spaceship({ position, color, label, properTime, velocity
         color="#cccccc"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/inter.json"
       >
         v = {(velocity * 100).toFixed(1)}% c
       </Text>
